@@ -1,0 +1,5 @@
+<view class="container">
+  <image src="{{src}}"></image>
+  <text>{{name}}</text>
+  <button bindtap="getProfile">获取头像和昵称</button>
+</view>

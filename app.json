@@ -1,0 +1,11 @@
+{
+    "pages": [
+      "pages/index/index"
+    ],
+    "window": {
+      "navigationBarTextStyle": "white",
+      "navigationBarTitleText": "手动创建小程序",
+      "navigationBarBackgroundColor": "#663399"
+    }
+}
+  
