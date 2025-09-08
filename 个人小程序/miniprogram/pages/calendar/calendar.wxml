@@ -1,0 +1,54 @@
+<!-- 日历容器 -->
+<view class="calendar-container">
+  <!-- 日历头部：年月显示和切换按钮 -->
+  <view class="calendar-header">
+    <button class="month-btn" bindtap="prevMonth">上个月</button>
+    <view class="current-month">{{currentYear}}年{{currentMonth}}月</view>
+    <button class="month-btn" bindtap="nextMonth">下个月</button>
+  </view>
+
+  <!-- 星期标题 -->
+  <view class="calendar-grid">
+    <view class="calendar-weekday" wx:for="{{['日', '一', '二', '三', '四', '五', '六']}}" wx:key="index">
+      {{item}}
+    </view>
+    
+    <!-- 日期格子：修复class多行语法错误，合并到同一行 -->
+    <view 
+      class="calendar-day {{item.isToday ? 'today' : ''}} {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.hasDiary ? 'has-diary' : ''}} {{selectedDate === item.dateString ? 'selected' : ''}}" 
+      wx:for="{{days}}" 
+      wx:key="index"
+      bindtap="onDayTap"
+      data-date="{{item.dateString}}"
+    >
+      <text class="day-number">{{item.day}}</text>
+      <!-- 日记指示器（有日记时显示小红点） -->
+      <view class="diary-indicator" wx:if="{{item.hasDiary}}"></view>
+    </view>
+  </view>
+  
+  <!-- 日记编辑区域（选中日期后显示） -->
+  <!-- 日记编辑区域（修改后） -->
+<view class="diary-section" wx:if="{{selectedDate}}">
+  <view class="section-title">{{selectedDate}} 的日记</view>
+  <textarea 
+    class="diary-textarea" 
+    placeholder="写下今天的点点滴滴..." 
+    value="{{currentDiaryContent}}"
+    bindinput="onDiaryInput"
+    auto-height
+  />
+  <!-- 始终显示“保存日记”，删除逻辑由内容是否为空决定 -->
+  <button class="save-diary-btn" bindtap="saveDiary">
+    保存日记
+  </button>
+</view>
+  
+  <!-- 加载提示（居中显示） -->
+  <view class="loading-mask" wx:if="{{isLoading}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,74 @@
+<view class="login-container">
+  <!-- 标题 -->
+  <view class="login-title">欢迎使用练歌日记</view>
+  <!-- 副标题 -->
+  <view class="login-subtitle">授权微信信息即可登录/注册</view>
+  
+  <!-- 用户信息预览区（授权后显示） -->
+  <view class="user-info" wx:if="{{userInfo}}">
+    <image 
+      class="user-avatar" 
+      src="{{userInfo.avatarUrl}}" 
+      mode="widthFix"
+    />
+    <view class="user-name">{{userInfo.nickName}}</view>
+    <!-- 已授权时显示“进入首页”按钮 -->
+    <button 
+      class="enter-btn" 
+      bindtap="navigateToHome"
+      hover-class="btn-hover"
+    >
+      进入首页
+    </button>
+  </view>
+  
+  <!-- 授权按钮（未授权时显示） -->
+  <!-- 关键修复：将注释移到标签外，避免属性行内包含注释 -->
+  <button 
+    class="auth-btn" 
+    wx:if="{{!userInfo}}"
+    bindtap="onGetUserProfile"
+    hover-class="btn-hover"
+  >
+    <icon type="success" size="36" color="#fff" />
+    <text class="auth-text">微信授权登录</text>
+  </button>
+  
+  <!-- 用户协议入口 -->
+  <view class="agreement-link" bindtap="showAgreement">
+    查看用户协议
+  </view>
+  
+  <!-- 用户协议弹窗 -->
+  <view class="agreement-mask" wx:if="{{showAgreement}}">
+    <view class="agreement-container">
+      <view class="agreement-title">用户协议</view>
+      <scroll-view 
+        class="agreement-content" 
+        scroll-y
+      >
+        <view class="agreement-text">
+          1. 服务条款：本服务为用户提供日记日历管理功能，用户需遵守相关法律法规。
+          \n2. 信息收集：仅收集用户微信公开信息（头像、昵称），用于身份标识，不泄露给第三方。
+          \n3. 账号安全：用户需对自己的账号安全负责，如遇异常请及时反馈。
+          \n4. 服务变更：平台有权根据业务调整服务内容，重大变更将提前通知用户。
+          \n5. 免责声明：对于因网络问题、设备故障导致的服务中断，平台不承担直接责任。
+        </view>
+      </scroll-view>
+      <button 
+        class="agreement-confirm" 
+        bindtap="closeAgreement"
+      >
+        我已阅读并同意
+      </button>
+    </view>
+  </view>
+  
+  <!-- 加载提示 -->
+  <view class="loading-mask" wx:if="{{isLoading}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">登录中...</text>
+    </view>
+  </view>
+</view>

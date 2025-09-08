@@ -1,0 +1,163 @@
+/* 基础容器：全屏背景+内边距 */
+.mine-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 1. 用户信息卡片：带阴影+圆角，突出头部 */
+.user-card {
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  padding: 30rpx 24rpx;
+  margin-bottom: 24rpx;
+}
+
+/* 用户头像：圆形+边框，防止变形 */
+.mine-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid #f0f0f0;
+  object-fit: cover; /* 避免头像拉伸 */
+}
+
+/* 用户信息行：flex 布局，垂直居中 */
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 24rpx; /* 头像与文字间距 */
+}
+
+/* 用户名+状态容器 */
+.user-info-wrap {
+  flex: 1; /* 占满剩余宽度 */
+}
+
+/* 用户名：加粗+适中大小 */
+.mine-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+/* 用户状态（登录时间）：灰色小字体 */
+.user-status {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 操作按钮（登录/编辑）：统一样式 */
+.action-btn {
+  padding: 14rpx 28rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  background-color: #07c160;
+  color: #fff;
+  border: none;
+}
+
+/* 编辑按钮：次要样式（灰色） */
+.action-btn--edit {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+/* 按钮 hover 效果：深色加深，浅色变灰 */
+.action-btn--hover {
+  opacity: 0.9;
+  transform: scale(1.02); /* 轻微放大，反馈更明显 */
+}
+
+/* 2. 数据统计卡片：三列均分，带点击效果 */
+.stats-card {
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  padding: 30rpx 0;
+  margin-bottom: 24rpx;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* 统计项：居中+点击高亮 */
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10rpx;
+  border-radius: 12rpx;
+  width: 30%;
+  text-align: center;
+}
+
+/* 统计数值：加粗+醒目颜色 */
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #07c160;
+  margin-bottom: 8rpx;
+}
+
+/* 统计标签：灰色小字体 */
+.stat-label {
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* 统计项点击效果 */
+.stat-item:active {
+  background-color: #f0f9f4;
+}
+
+/* 3. 功能菜单卡片：列表+分割线 */
+.menu-card {
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 24rpx;
+}
+
+/* 菜单项：flex 布局+垂直居中 */
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 最后一个菜单项：取消下边框 */
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+/* 菜单项图标：固定大小+颜色 */
+.menu-icon {
+  margin-right: 24rpx;
+}
+
+/* 菜单项文字：flex 占满，避免被挤压 */
+.menu-text {
+  flex: 1;
+}
+
+/* 菜单项箭头：居右+灰色 */
+.menu-arrow {
+  transform: rotate(90deg); /* 右转箭头（原 right 图标是水平的） */
+}
+
+/* 菜单项点击效果：背景高亮 */
+.menu-item--active {
+  background-color: #f5f5f5;
+}
+
+/* 5. 修复默认头像样式（若未找到默认图，显示灰色背景） */
+image.mine-avatar[src*="default-avatar.png"] {
+  background-color: #f0f0f0;
+}

@@ -1,0 +1,45 @@
+<!--pages/practice/practice.wxml-->
+<view class="practice-container">
+  <!-- 歌曲信息 -->
+  <view class="song-info">
+    <!-- 修复：用 song && song.title 替代 song?.title -->
+    <view class="song-title">{{song && song.title || '加载中...'}}</view>
+    <view class="song-singer">{{song && song.singer || ''}}</view>
+  </view>
+
+  <!-- 歌词显示区 -->
+  <view class="lyrics-container">
+    <view class="other-lyric" wx:if="{{currentSentence > 0}}">{{lyrics[currentSentence - 1]}}</view>
+    <view class="current-lyric">{{lyrics[currentSentence] || '暂无歌词'}}</view>
+    <view class="other-lyric" wx:if="{{currentSentence < lyrics.length - 1}}">{{lyrics[currentSentence + 1]}}</view>
+  </view>
+
+  <!-- 模式切换 -->
+  <view class="mode-switch">
+    <button class="mode-btn {{practiceMode === 'sentence' ? 'active' : ''}}" bindtap="switchMode" data-mode="sentence">逐句练习</button>
+    <button class="mode-btn {{practiceMode === 'section' ? 'active' : ''}}" bindtap="switchMode" data-mode="section">分段练习</button>
+    <button class="mode-btn {{practiceMode === 'full' ? 'active' : ''}}" bindtap="switchMode" data-mode="full">完整练习</button>
+  </view>
+
+  <!-- 控制按钮 -->
+  <view class="control-panel">
+    <button class="nav-btn" bindtap="prevSentence">上一句</button>
+    <button class="record-btn" bindtap="{{isRecording ? 'stopRecording' : 'startRecording'}}">
+      {{isRecording ? '停止' : '录音'}}
+    </button>
+    <button class="nav-btn" bindtap="nextSentence">下一句</button>
+  </view>
+
+  <!-- 相关视频 -->
+  <view class="videos-section">
+    <view class="section-title">学习视频</view>
+    <button class="add-btn" bindtap="importVideo">+ 导入视频</button>
+    <view class="video-list">
+      <view class="video-item" wx:for="{{videos}}" wx:key="id" bindtap="playVideo" data-id="{{item.id}}">
+        <image class="video-thumb" src="{{item.coverUrl || '/images/default-goods-image.png'}}"></image>
+        <view class="video-title">{{item.title}}</view>
+      </view>
+      <view class="no-data" wx:if="{{videos.length === 0}}">暂无学习视频，点击导入添加</view>
+    </view>
+  </view>
+</view>

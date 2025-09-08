@@ -1,0 +1,74 @@
+<!-- “我的”板块：优化布局和交互 -->
+<view class="mine-container">
+  <!-- 顶部用户信息卡片（带阴影，突出头部） -->
+  <view class="user-card">
+    <view class="user-header">
+      <!-- 头像（默认图+加载过渡） -->
+      <image 
+        class="mine-avatar" 
+        src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" 
+        mode="widthFix"
+        lazy-load
+      />
+      <!-- 用户名+状态 -->
+      <view class="user-info-wrap">
+        <view class="mine-name">{{userInfo.nickName || "未登录"}}</view>
+        <view class="user-status" wx:if="{{userInfo}}">
+          登录时间：{{formatLastLogin()}}
+        </view>
+      </view>
+      <!-- 登录/编辑按钮（根据登录状态切换） -->
+      <button 
+        class="action-btn" 
+        wx:if="{{!userInfo}}"
+        bindtap="gotoLogin"
+        hover-class="action-btn--hover"
+      >
+        点击登录
+      </button>
+      <button 
+        class="action-btn action-btn--edit" 
+        wx:if="{{userInfo}}"
+        bindtap="editUserInfo"
+        hover-class="action-btn--hover"
+      >
+        编辑资料
+      </button>
+    </view>
+  </view>
+
+  <!-- 数据统计卡片（如日记数量、收藏数，可选展示） -->
+  <view class="stats-card" wx:if="{{userInfo}}">
+    <view class="stat-item" bindtap="gotoDiaryList">
+      <view class="stat-value">{{diaryCount || 0}}</view>
+      <view class="stat-label">我的日记</view>
+    </view>
+    <view class="stat-item" bindtap="gotoCollection">
+      <view class="stat-value">{{collectCount || 0}}</view>
+      <view class="stat-label">我的歌曲</view>
+    </view>
+    <view class="stat-item" bindtap="gotoHistory">
+      <view class="stat-value">{{historyCount || 0}}</view>
+      <view class="stat-label">浏览历史</view>
+    </view>
+  </view>
+
+  <!-- 功能菜单列表（带分割线和点击效果） -->
+  <view class="menu-card">
+    <view class="menu-item" bindtap="gotoSetting" hover-class="menu-item--active">
+      <icon type="setting" size="32" color="#07c160" class="menu-icon" />
+      <text class="menu-text">设置</text>
+      <icon type="right" size="24" color="#999" class="menu-arrow" />
+    </view>
+    <view class="menu-item" bindtap="gotoHelp" hover-class="menu-item--active">
+      <icon type="help" size="32" color="#07c160" class="menu-icon" />
+      <text class="menu-text">帮助中心</text>
+      <icon type="right" size="24" color="#999" class="menu-arrow" />
+    </view>
+    <view class="menu-item" bindtap="logout" hover-class="menu-item--active">
+      <icon type="logout" size="32" color="#F44336" class="menu-icon" />
+      <text class="menu-text">退出登录</text>
+      <icon type="right" size="24" color="#999" class="menu-arrow" />
+    </view>
+  </view>
+</view>

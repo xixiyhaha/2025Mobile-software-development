@@ -1,0 +1,61 @@
+<!-- 点歌台首页首页（文件夹列表） -->
+<view class="container">
+  <!-- 标题和新建按钮 -->
+  <view class="header">
+    <button class="ddd-btn"></button>
+    <text class="title">我的练歌文件夹</text>
+    <button class="add-btn" bindtap="showCreateDialog">+</button>
+  </view>
+
+  <!-- 文件夹列表区域 -->
+  <view class="folder-container">
+    <!-- 无文件夹时显示 -->
+    <view wx:if="{{folderList.length === 0}}" class="empty-tip">
+      <icon type="folder" size="60" color="#ccc" />
+      <text>还没有文件夹，点击"新建文件夹"开始吧</text>
+    </view>
+
+    <!-- 有文件夹时显示列表 -->
+    <view wx:else class="folder-list">
+      <view wx:for="{{folderList}}" wx:key="folderId" class="folder-item">
+        <view class="folder-info" bindtap="enterFolder" data-folderid="{{item.folderId}}">
+          <view class="folder-icon">
+            <icon type="folder" size="40" color="#FFD700" />
+          </view>
+          <view class="folder-detail">
+            <view class="folder-name">{{item.name}}</view>
+            <view class="folder-desc">
+              视频: {{(item.videoList && item.videoList.length) || 0}}个 | 
+              {{item && item.audioFileID && item.audioFileID.toString().trim().length > 0 ? '已添加伴奏' : '未添加伴奏'}}
+            </view>
+          </view>
+        </view>
+        <button 
+          class="delete-btn" 
+          bindtap="deleteFolder" 
+          data-folderid="{{item.folderId}}"
+        >
+          删除
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 新建文件夹对话框 -->
+  <view wx:if="{{showCreateDialog}}" class="dialog-mask">
+    <view class="dialog-container">
+      <view class="dialog-title">新建文件夹</view>
+      <input 
+        class="dialog-input" 
+        placeholder="请输入文件夹名称" 
+        value="{{newFolderName}}"
+        bindinput="onFolderNameInput"
+      />
+      <view class="dialog-buttons">
+        <button class="dialog-btn cancel" bindtap="hideCreateDialog">取消</button>
+        <button class="dialog-btn confirm" bindtap="confirmCreateFolder">创建</button>
+      </view>
+    </view>
+  </view>
+</view>
+    

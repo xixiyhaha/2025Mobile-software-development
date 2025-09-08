@@ -1,0 +1,257 @@
+<view class="container">
+  <!-- 文件夹头部信息 -->
+  <view class="folder-header">
+    <view class="folder-name">{{folderInfo.name}}</view>
+    <view class="folder-time">
+      创建于 {{formatDateTime(folderInfo.createTime)}}
+    </view>
+  </view>
+
+  <!-- 功能按钮区域 -->
+  <view class="function-buttons">
+    <!-- 添加/更换伴奏 -->
+    <button 
+      class="func-btn" 
+      bindtap="chooseAudio"
+      wx:if="{{!audioFileID}}"
+    >
+      <icon type="audio" size="24" />
+      <text>添加伴奏音频</text>
+    </button>
+    <button 
+      class="func-btn" 
+      bindtap="chooseAudio"
+      wx:if="{{audioFileID}}"
+    >
+      <icon type="audio" size="24" />
+      <text>更换伴奏音频</text>
+    </button>
+
+    <!-- 添加/更换歌词 -->
+    <button 
+      class="func-btn" 
+      bindtap="chooseLyric"
+      wx:if="{{!lyricContent}}"
+    >
+      <icon type="font" size="24" />
+      <text>添加歌词</text>
+    </button>
+    <button 
+      class="func-btn" 
+      bindtap="chooseLyric"
+      wx:if="{{lyricContent}}"
+    >
+      <icon type="font" size="24" />
+      <text>更换歌词</text>
+    </button>
+
+    <!-- 添加视频（URL） -->
+    <button 
+      class="func-btn" 
+      bindtap="showVideoUrlDialog"
+    >
+      <icon type="video" size="24" />
+      <text>添加视频(URL)</text>
+    </button>
+
+    <!-- 录音按钮 -->
+    <button 
+      class="func-btn record-btn" 
+      bindtap="startRecord"
+      wx:if="{{!isRecording && audioFileID}}"
+    >
+      <icon type="mic" size="24" />
+      <text>开始录音</text>
+    </button>
+    <button 
+      class="func-btn stop-record-btn" 
+      bindtap="stopRecording"
+      wx:if="{{isRecording}}"
+    >
+      <icon type="stop" size="24" />
+      <text>停止录音</text>
+    </button>
+  </view>
+
+  <!-- 伴奏音频区域 -->
+  <view class="section" wx:if="{{audioFileID}}">
+    <view class="section-title">当前伴奏</view>
+    <view class="audio-container">
+      <audio 
+        src="{{tempAudioPath}}" 
+        controls 
+        name="{{audioName}}"
+        poster="https://picsum.photos/200/200?random=3"
+        binderror="onAudioError"
+        bindtap="toggleAudioPlay"
+      />
+      <button class="delete-btn" bindtap="deleteAudio">删除伴奏</button>
+    </view>
+  </view>
+
+  <!-- 无伴奏时显示提示 -->
+  <view class="section" wx:if="{{!audioFileID}}">
+    <view class="section-title">当前伴奏</view>
+    <view class="empty-tip">暂无伴奏，请点击"添加伴奏音频"按钮上传</view>
+  </view>
+
+  <!-- 歌词区域 -->
+  <view class="section" wx:if="{{lyricContent}}">
+    <view class="section-title">当前歌词</view>
+    <view class="lyric-container">
+      <scroll-view 
+        class="lyric-scroll" 
+        scroll-y
+        style="height: 200px;"
+      >
+        <view class="lyric-line" wx:for="{{lyricLines}}" wx:key="index">
+          {{item}}
+        </view>
+      </scroll-view>
+      <button 
+        class="delete-btn" 
+        bindtap="deleteLyric"
+      >
+        删除歌词
+      </button>
+    </view>
+  </view>
+
+  <!-- 录音列表区域 -->
+  <view class="section" wx:if="{{recordList.length > 0}}">
+    <view class="section-title">
+      录音列表 ({{recordList.length}})
+    </view>
+    <view class="record-list">
+      <view 
+        wx:for="{{recordList}}" 
+        wx:key="recordId" 
+        class="record-item {{currentPlayRecord === item.recordId ? 'record-item-playing' : ''}}"
+      >
+        <view class="record-info">
+          <view class="record-name">
+            {{item.name}}
+            <view class="duration-tag">
+              <text>{{item.formattedCreateTime}}</text>
+              <text>{{item.durationFromName}}</text>              
+            </view>
+          </view>
+        </view>
+        <!-- 进度条与控制区（仅当前播放的录音显示） -->
+        <view class="audio-player" wx:if="{{currentPlayRecord === item.recordId}}">
+          <!-- 进度条容器 -->
+          <view class="progress-wrap" bindtouchstart="onProgressTouchStart" bindtouchmove="onProgressTouchMove" bindtouchend="onProgressTouchEnd" data-recordid="{{item.recordId}}">
+            <!-- 进度条背景 -->
+            <view class="progress-bg"></view>
+            <!-- 已播放进度 -->
+            <view 
+              class="progress-played" 
+              style="width: {{item.progressPercent || 0}}%"
+            ></view>
+            <!-- 进度滑块（圆点） -->
+            <view 
+              class="progress-slider" 
+              style="left: {{item.progressPercent || 0}}%"
+            ></view>
+          </view>
+          <!-- 播放/暂停按钮 + 时间 -->
+          <view class="control-bar">
+            <button 
+              class="play-btn" 
+              bindtap="toggleRecordPlay"
+              data-recordid="{{item.recordId}}"
+            >
+              {{isAudioPlaying ? '❚❚' : '▶'}}
+            </button>
+            <text class="time-current">{{formatTime(item.currentTime || 0)}}</text>
+            <text class="time-total">{{item.durationFromName || '00:00'}}</text>
+          </view>
+        </view>
+        <!-- 非播放状态：仅显示“播放”按钮 -->
+        <button 
+          class="play-btn" 
+          bindtap="playRecording" 
+          data-record="{{item}}" 
+          wx:if="{{currentPlayRecord !== item.recordId}}"
+        >
+          播放
+        </button>
+        <!-- 删除按钮 -->
+        <button 
+          class="delete-btn" 
+          bindtap="deleteRecording" 
+          data-recordingid="{{item.recordId}}" 
+          data-fileid="{{item.fileID}}"
+        >
+          删除
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 录音列表空状态 -->
+  <view class="section" wx:if="{{recordList.length === 0 && audioFileID}}">
+    <view class="section-title">录音列表</view>
+    <view class="empty-tip">暂无录音，点击"开始录音"按钮创建</view>
+  </view>
+
+  <!-- 视频列表区域 -->
+  <view class="section">
+    <view class="section-title">
+      视频列表 ({{videoList.length}})
+    </view>
+    <view class="video-list">
+      <!-- 空状态 -->
+      <view wx:if="{{videoList.length === 0}}" class="empty-tip">
+        暂无视频，点击"加视频(URL)"添加
+      </view>
+      <!-- 视频列表 -->
+      <view wx:else>
+        <view wx:for="{{videoList}}" wx:key="videoId" class="video-item">
+          <video 
+            src="{{item.playUrl}}" 
+            controls 
+            class="video-player" 
+            objectFit="cover" 
+            binderror="onVideoError"
+          />
+          <view class="video-ops">
+            <button 
+              bindtap="playWithAudio" 
+              data-vid="{{item.videoId}}" 
+              class="op-btn" 
+              wx:if="{{audioFileID}}"
+            >
+              伴唱模式
+            </button>
+            <button 
+              bindtap="deleteVideo" 
+              data-vid="{{item.videoId}}" 
+              class="op-btn delete-btn"
+            >
+              删除
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加视频URL对话框 -->
+  <view wx:if="{{showVideoUrlDialog}}" class="dialog-mask">
+    <view class="dialog-container">
+      <view class="dialog-title">添加视频</view>
+      <input 
+        class="dialog-input" 
+        placeholder="请输入视频URL（支持MP4格式）" 
+        value="{{videoUrl}}"
+        bindinput="onVideoUrlInput"
+      />
+      <view class="dialog-buttons">
+        <button class="dialog-btn cancel" bindtap="hideVideoUrlDialog">取消</button>
+        <button class="dialog-btn confirm" bindtap="confirmAddVideo">添加</button>
+      </view>
+    </view>
+  </view>
+</view>
+    
