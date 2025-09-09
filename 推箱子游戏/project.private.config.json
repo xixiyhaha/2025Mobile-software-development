@@ -1,0 +1,15 @@
+{
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "game",
+          "pathName": "pages/game/game",
+          "query": "level=0",
+          "scene": null,
+          "launchMode": "default"
+        }
+      ]
+    }
+  }
+}
