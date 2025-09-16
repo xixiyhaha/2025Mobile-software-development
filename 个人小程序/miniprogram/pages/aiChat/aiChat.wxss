@@ -1,0 +1,160 @@
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f5f5; /* 背景浅灰 */
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+/* 大容器，包含标题栏、聊天区、推荐问题、输入框 */
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* 顶部标题栏 */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx;
+  background: var(--theme-color); /* 使用主题色 */
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-left: 10rpx;
+}
+
+.clear-btn {
+  font-size: 28rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 6rpx 20rpx;
+  border-radius: 25rpx;
+  margin-right: 10rpx;
+}
+
+/* 对于白色主题，需要将文字颜色设置为黑色以保证可见性 */
+.chat-container[style*="#f8f8f8"] .clear-btn {
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 聊天内容区，占中间空间 */
+.chat-box {
+  flex: 1;
+  padding: 24rpx 30rpx;
+  background: #fff;
+  overflow-y: scroll;
+}
+
+.msg-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+  width: 100%;
+}
+
+.msg-item.user {
+  flex-direction: row-reverse;
+}
+
+/* 确保头像容器不会被挤压 */
+.msg-item image.avatar {
+  flex-shrink: 0;
+}
+
+/* 用户消息项头像向左移动 */
+.msg-item.user image.avatar {
+  margin-right: 60rpx;
+}
+
+/* 头像大小 */
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+/* 气泡在头像之间 */
+.msg-bubble {
+  max-width: calc(100% - 300rpx);
+  padding: 20rpx;
+  border-radius: 20rpx;
+  margin: 0 20rpx;
+  background: #f2f2f2; /* 浅灰背景 */
+  font-size: 32rpx;
+  line-height: 1.4;
+  word-break: break-word;
+  color: #000; /* 黑色文字 */
+}
+
+.msg-item.user .msg-bubble {
+  background: var(--theme-color); /* 使用主题色 */
+  color: #fff;      /* 白色文字 */
+}
+
+/* 推荐问题 */
+.suggest-questions {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16rpx 20rpx;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+  flex-shrink: 0;
+}
+
+.suggest-item {
+  padding: 12rpx 28rpx;
+  background: #e0e0e0; /* 中灰背景 */
+  color: #000;         /* 黑色文字 */
+  border-radius: 28rpx;
+  margin: 12rpx 12rpx 0 0;
+  font-size: 28rpx;
+}
+
+/* 输入框 */
+.input-bar {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 20rpx;
+  background: #fff;
+  border-top: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  font-size: 32rpx;
+  padding: 20rpx;
+  color: #000;
+}
+
+.send-btn {
+  margin-left: 20rpx;
+  padding: 12rpx 36rpx;
+  border-radius: 36rpx;
+  font-size: 30rpx;
+}
+
+.send-btn.disabled {
+  background: #ccc; /* 灰色不可点击 */
+  color: #fff;
+}
+
+.send-btn.active {
+  background: var(--theme-color); /* 使用主题色 */
+  color: #fff;
+}

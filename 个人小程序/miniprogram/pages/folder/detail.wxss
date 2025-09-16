@@ -8,6 +8,7 @@
 /* 文件夹头部 */
 .folder-header {
   margin-bottom: 20px;
+  text-align: center;
 }
 .folder-name {
   font-size: 18px;
@@ -53,20 +54,36 @@
 
 /* 分区标题 */
 .section {
-  width:100%;
+  width: 100%;
   background-color: white;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-sizing: border-box; /* 确保padding不影响宽度 */
+  transition: box-shadow 0.3s ease;
+}
+.section:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 .section-title {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   color: #333;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #eee;
+  position: relative;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: var(--theme-color);
+  border-radius: 3px;
 }
 
 /* 音频容器 */
@@ -77,6 +94,133 @@
 }
 .audio-container audio {
   width: 100%;
+}
+
+/* 伴奏卡片样式优化 */
+.accompaniment-card {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e6eb 100%);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+.accompaniment-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* 封面样式优化 */
+.cover {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  background-color: #e6e6e6;
+  margin-right: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.cover:hover .cover-img {
+  transform: scale(1.05);
+}
+
+/* 播放按钮样式优化 */
+.accompaniment-card .play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background-color: var(--theme-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  z-index: 10;
+}
+
+/* 播放按钮点击效果 */
+.accompaniment-card .play-btn:active {
+  transform: translate(-50%, -50%) scale(0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 封面遮罩效果 */
+.cover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+.cover:hover::after {
+  opacity: 1;
+}
+.accompaniment-card .play-btn:hover {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+  background-color: var(--theme-color);
+}
+
+/* 信息区域样式优化 */
+.info {
+  flex: 1;
+  min-width: 0;
+}
+.info .title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.info .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 删除按钮样式优化 */
+.delete-btn {
+  width: 30%;
+  margin-top: 12px;
+  padding: 10px;
+  background-color: #fff0f0;
+  border: 1px solid #ffccc7;
+  color: #ff4d4f;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+.delete-btn:hover {
+  background-color: #ff4d4f;
+  color: white;
+  border-color: #ff4d4f;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 77, 79, 0.3);
 }
 
 /* 歌词容器 */
@@ -99,41 +243,137 @@
 
 /* 视频列表 */
 .video-list {
+  width:100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 .video-item {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  padding: 10px 0;
+  border-radius: 6px;
 }
+.video-cover {
+  width: 100%;
+  height: 100%;
+  border-radius: 8rpx;
+  object-fit: cover;
+}
+.video-top{
+  display: flex;
+  flex-direction: row;
+}
+/* 统一视频和web-view播放容器样式 */
 .video-player {
   width: 100%;
-  height: 200px;
-  border-radius: 4px;
+  height: 300rpx; /* 可根据需求调整高度 */
+  border-radius: 8px;
+  background-color: #000;
+  overflow: hidden; /* 防止内容溢出 */
 }
 .video-ops {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+}
+.video-wrapper {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+.video-item-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.video-link-info {
+  flex: 1;
+  margin-right: 10px;
+}
+.video-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.video-desc, .video-url-preview {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+/* 视频项操作按钮容器 */
+.video-actions {
+  display: flex;
+  gap: 8px;
+}
+.video-actions-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.video-actions-btn button {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.video-actions-btn button:first-child {
+  background-color: #07c160;
+  color: #fff;
+}
+
+/* 播放按钮样式 */
+.play-btn-preview {
+  height:50%;
+  background-color: #07c160;
+  color: white;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  white-space: nowrap;
 }
 .op-btn {
   flex: 1;
+  min-width: 160rpx;
   background-color: #f5f5f5;
   color: #333;
   border: none;
   border-radius: 4px;
   padding: 8px 0;
+  font-size: 14px;
+}
+/* 切换播放模式按钮 */
+.switch-btn {
+  background-color: #4a90e2;
+  color: #fff;
+}
+/* 删除按钮样式 */
+.delete-btn {
+  height:50%;
+  color: #f53f3f;
+  background: transparent;
+  border: 1px solid #f53f3f;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
-/* 录音列表相关优化 */
-.recording-list {
+/* 录音列表相关样式 */
+.record-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-
-.recording-item {
+.record-item {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -142,79 +382,79 @@
   border-radius: 8px;
   background-color: #fff;
 }
+.record-item-playing {
+  border-color: #07c160;
+}
 
-.recording-info {
-  font-size: 13px;
-  color: #666;
+.record-name {
+  flex: 1;
+  font-weight: 500;
+}
+.duration-tag {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 8px;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+.bofang{
+  display: flex;
+  flex-direction:row;
 }
 
-.recording-duration {
-  color: #888;
-}
-
-.duration-tag{
-  display:flex;
-  justify-content:space-between;
-}
-
-/* 播放器整体 */
+/* 播放器样式 */
 .audio-player {
   display: flex;
   flex-direction: column;
   background: #fff;
-  padding: 10px;
-  color: #fff;
+  padding: 10px 0;
+  color: #333;
 }
 
-/* 进度条容器 */
-.progress-wrap {
-  height: 4px;
-  background: rgba(152, 151, 151, 0.3); /* 进度条背景为灰色 */
-  position: relative;
-  margin: 10px 0;
-  border-radius: 2px;
-}
-/* 已播放进度条（黑色） */
+/* 已播放进度条 */
 .progress-played {
   height: 4px;
-  background: #6d6969; /* 已播放部分为黑灰色 */
+  background: #07c160;
   position: absolute;
   top: 0;
   left: 0;
   border-radius: 2px;
 }
-/* 进度滑块（黑色圆点） */
+/* 进度滑块 */
 .progress-slider {
-  width: 12px;
-  height: 12px;
-  background: #6d6969; /* 滑块为黑灰色 */
+  width: 14px;
+  height: 14px;
+  background: #07c160;
   border-radius: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 /* 控制栏 */
 .control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
 }
 /* 播放/暂停按钮 */
 .play-btn {
   background: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
+  color: #333;
+  padding: 0 5px;
 }
-/* 删除按钮 */
-.delete-btn {
-  color: red;
-  background: transparent;
-  border: none;
-  margin-top: 0px;
+/* 时间显示 */
+.time-current, .time-total {
+  font-size: 12px;
+  color: #888;
+  min-width: 40px;
+  text-align: center;
 }
 
-/* 对话框 */
+/* 对话框样式 */
 .dialog-mask {
   position: fixed;
   top: 0;
@@ -233,6 +473,7 @@
   max-width: 400px;
   border-radius: 8px;
   padding: 20px;
+  box-sizing: border-box;
 }
 .dialog-title {
   font-size: 18px;
@@ -242,11 +483,21 @@
 }
 .dialog-input {
   width: 100%;
+  height:50%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  margin-bottom: 20px;
+  margin-bottom: 13px;
   font-size: 14px;
+  box-sizing: border-box;
+}
+/* 视频解析提示 */
+.parse-tips {
+  color: #4a90e2;
+  font-size: 13px;
+  margin: -10px 0 15px 0;
+  text-align: center;
+  min-height: 16px;
 }
 .dialog-buttons {
   display: flex;
@@ -268,3 +519,278 @@
   color: white;
   border: none;
 }
+
+/* 无伴奏空状态 */
+.empty-tip {
+  text-align: center;
+  color: #999;
+  padding: 40px 20px;
+  font-size: 14px;
+  line-height: 22px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #e0e0e0;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+.empty-tip:hover {
+  background-color: #f0f0f0;
+  border-color: #d0d0d0;
+}
+/* 小提示文本 */
+.tip-small {
+  font-size: 12px;
+  color: #888;
+  margin-top: 10rpx;
+  display: block;
+}
+
+/* 适配不同屏幕尺寸 */
+@media (max-width: 320px) {
+  .func-btn {
+    min-width: 100%;
+  }
+  .video-ops {
+    flex-direction: column;
+  }
+  .op-btn {
+    width: 100%;
+    min-width: auto;
+  }
+}
+/* 输入框样式 */
+.input-container {
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+.dialog-input.invalid {
+  border-color: #ff4d4f;
+  background-color: #fff8f8;
+}
+/* 提示信息样式 */
+.url-tips {
+  color: #ff4d4f;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  min-height: 30rpx;
+}
+
+.support-platforms {
+  color: #888;
+  font-size: 22rpx;
+  margin-top: 10rpx;
+}
+
+/* 添加禁用按钮样式 */
+.disabled-btn {
+  opacity: 0.6;
+}
+
+.disabled-btn text {
+  color: #999;
+}
+
+/* 确保按钮始终可见和可点击 */
+.dialog-btn.confirm {
+  background-color: #07c160 !important;
+  color: white !important;
+  opacity: 1 !important;
+}
+
+/* 视频卡片容器 */
+.video-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.05);
+  position: relative; /* 让删除按钮绝对定位 */
+}
+
+/* 删除按钮：卡片右上角 */
+.video-delete-btn {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background: rgba(255, 59, 48, 0.9);
+  color: #fff;
+  font-size: 26rpx;
+  line-height: 50rpx;
+  text-align: center;
+  border: none;
+  padding: 0;
+  z-index: 6;
+}
+
+/* 封面：正方形 */
+.video-cover-wrap {
+  position: relative;
+  width: 200rpx;
+  height: 200rpx; /* 改成正方形 */
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.video-cover {
+  width: 100%;
+  height: 100%;
+  border-radius: 8rpx;
+  object-fit: cover;
+}
+
+/* 信息区 */
+.video-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.video-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 6rpx;
+}
+
+.video-meta {
+  font-size: 24rpx;
+  color: #999;
+}
+/* ========== 录音卡片（新的样式） ========== */
+.record-card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+  position: relative; /* 让删除按钮绝对定位 */
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.record-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.record-delete-btn {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background: rgba(255, 59, 48, 0.9);
+  color: #fff;
+  font-size: 20rpx;
+  line-height: 50rpx;
+  text-align: center;
+  border: none;
+  padding: 0;
+  z-index: 6;
+}
+
+.record-body {
+  display: flex;
+  align-items: center;
+}
+
+.record-play-btn {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  background: var(--theme-color, #07c160);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+}
+
+.record-play-btn text {
+  font-size: 32rpx;
+}
+
+.record-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.record-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #888;
+  margin-bottom: 8rpx;
+}
+
+.progress-wrap {
+  width: 100%;
+  height: 40rpx; /* 增加高度以提高触摸区域的可访问性 */
+  background: #eee;
+  border-radius: 20rpx;
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin: 10rpx 0;
+  z-index: 1; /* 确保进度条在可点击层级上 */
+  display: flex;
+  align-items: center;
+}
+
+.progress-wrap:active {
+  background: #ddd;
+}
+
+.progress-bar {
+  height: 16rpx; /* 稍微增加高度，使进度条更明显 */
+  background: var(--theme-color, #07c160);
+  border-radius: 8rpx;
+  transition: width 0.15s linear;
+  position: relative;
+  display: block;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 24rpx;
+  height: 24rpx;
+  background: var(--theme-color, #07c160);
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+  opacity: 1; /* 始终显示滑块，增强用户可操作性感知 */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  border: 4rpx solid #fff;
+}
+
+.progress-wrap:active .progress-bar::after {
+  opacity: 1;
+  transform: translate(50%, -50%) scale(1.2); /* 添加缩放效果增强交互感 */
+}
+
+.progress-time {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #666;
+  text-align: right;
+  z-index: 0; /* 确保时间显示在进度条下方 */
+}
+

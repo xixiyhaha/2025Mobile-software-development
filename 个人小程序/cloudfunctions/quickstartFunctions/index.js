@@ -1,6 +1,6 @@
 const cloud = require("wx-server-sdk");
 cloud.init({
-  env: cloud.DYNAMIC_CURRENT_ENV,
+  env: "cloud1-1grapwhzb010af67",
 });
 
 const db = cloud.database();

@@ -13,17 +13,18 @@
       {{item}}
     </view>
     
-    <!-- 日期格子：修复class多行语法错误，合并到同一行 -->
+    <!-- 日期格子：使用动态主题色 -->
     <view 
-      class="calendar-day {{item.isToday ? 'today' : ''}} {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.hasDiary ? 'has-diary' : ''}} {{selectedDate === item.dateString ? 'selected' : ''}}" 
+      class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.hasDiary ? 'has-diary' : ''}} {{selectedDate === item.dateString ? 'selected' : ''}}"
       wx:for="{{days}}" 
       wx:key="index"
       bindtap="onDayTap"
       data-date="{{item.dateString}}"
+      style="{{item.isToday ? 'background-color:' + themeColor + '10;' : ''}}"
     >
-      <text class="day-number">{{item.day}}</text>
+      <text class="day-number" style="{{item.isToday ? 'color:' + themeColor + ';' : ''}}">{{item.day}}</text>
       <!-- 日记指示器（有日记时显示小红点） -->
-      <view class="diary-indicator" wx:if="{{item.hasDiary}}"></view>
+      <view class="diary-indicator" wx:if="{{item.hasDiary}}" style="background-color:{{themeColor}};"></view>
     </view>
   </view>
   
@@ -39,7 +40,7 @@
     auto-height
   />
   <!-- 始终显示“保存日记”，删除逻辑由内容是否为空决定 -->
-  <button class="save-diary-btn" bindtap="saveDiary">
+  <button class="save-diary-btn" bindtap="saveDiary" style="background-color:{{themeColor}};">
     保存日记
   </button>
 </view>
@@ -47,7 +48,7 @@
   <!-- 加载提示（居中显示） -->
   <view class="loading-mask" wx:if="{{isLoading}}">
     <view class="loading-content">
-      <view class="loading-spinner"></view>
+      <view class="loading-spinner" style="border-top-color:{{themeColor}};"></view>
       <text class="loading-text">加载中...</text>
     </view>
   </view>

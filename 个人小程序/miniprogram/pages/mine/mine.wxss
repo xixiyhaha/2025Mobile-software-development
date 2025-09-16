@@ -56,8 +56,8 @@
   padding: 14rpx 28rpx;
   border-radius: 30rpx;
   font-size: 24rpx;
-  background-color: #07c160;
-  color: #fff;
+  background-color: var(--theme-color);
+  color: var(--theme-text-color);
   border: none;
 }
 
@@ -99,7 +99,7 @@
 .stat-value {
   font-size: 36rpx;
   font-weight: 700;
-  color: #07c160;
+  color: var(--theme-color);
   margin-bottom: 8rpx;
 }
 
@@ -140,6 +140,7 @@
 /* 菜单项图标：固定大小+颜色 */
 .menu-icon {
   margin-right: 24rpx;
+  color: var(--theme-color);
 }
 
 /* 菜单项文字：flex 占满，避免被挤压 */
@@ -160,4 +161,103 @@
 /* 5. 修复默认头像样式（若未找到默认图，显示灰色背景） */
 image.mine-avatar[src*="default-avatar.png"] {
   background-color: #f0f0f0;
+}
+
+/* 遮罩层 */
+.popup-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* 弹窗容器 */
+.popup-container {
+  width: 80%;
+  max-height: 70%;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 标题 */
+.popup-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+/* 内容区 */
+.popup-content {
+  flex: 1;
+  margin-bottom: 20rpx;
+}
+
+.popup-text {
+  font-size: 28rpx;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* 按钮 */
+.popup-btn {
+  background: var(--theme-color);
+  color: var(--theme-text-color);
+  border-radius: 12rpx;
+}
+
+/* 主题颜色选择器样式 */
+.setting-item {
+  margin-bottom: 30rpx;
+}
+
+.setting-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.color-option {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.color-option:active {
+  transform: scale(1.1);
+}
+
+.color-option.selected {
+  border-width: 4rpx;
+  border-color: #333;
+  box-shadow: 0 0 0 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.color-check {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-shadow: 0 0 2rpx rgba(0, 0, 0, 0.3);
 }

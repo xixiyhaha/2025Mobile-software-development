@@ -1,0 +1,46 @@
+<view class="chat-page">
+  <!-- 大容器 -->
+  <view class="chat-container" style="--theme-color: {{themeColor || '#07c160'}};">
+    <!-- 顶部标题栏 -->
+    <view class="chat-header">
+      <text class="header-title">智歌AI</text>
+      <button class="clear-btn" bindtap="clearChat">清空对话</button>
+    </view>
+
+    <!-- 聊天内容框 -->
+    <scroll-view class="chat-box" scroll-y="true" scroll-into-view="{{toView}}">
+      <block wx:for="{{messages}}" wx:key="index">
+        <view id="msg-{{index}}" class="msg-item {{item.from}}">
+          <image class="avatar" src="{{item.avatar}}" />
+          <view class="msg-bubble">{{item.content}}</view>
+        </view>
+      </block>
+    </scroll-view>
+
+    <!-- 推荐问题（仅在 showSuggestions 为 true 时显示） -->
+    <view class="suggest-questions" wx:if="{{showSuggestions}}">
+      <block wx:for="{{suggestions}}" wx:key="index">
+        <view class="suggest-item" bindtap="askSuggestion" data-q="{{item}}">
+          {{item}}
+        </view>
+      </block>
+    </view>
+
+    <!-- 输入框 -->
+    <view class="input-bar">
+      <input
+        class="input"
+        placeholder="{{placeholder}}"
+        value="{{inputValue}}"
+        bindinput="onInput"
+      />
+      <button
+        class="send-btn {{inputValue ? 'active' : 'disabled'}}"
+        bindtap="sendMessage"
+        disabled="{{!inputValue}}"
+      >
+        发送
+      </button>
+    </view>
+  </view>
+</view>

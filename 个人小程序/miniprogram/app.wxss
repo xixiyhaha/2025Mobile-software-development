@@ -1,4 +1,11 @@
 /**app.wxss**/
+/* CSS变量定义 */
+page {
+  --theme-color: #07c160;
+  --theme-text-color: #fff;
+  --theme-active-color: rgba(7, 193, 96, 0.1);
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -17,7 +24,6 @@ button:focus{
 button::after{
   border: none;
 }
-
 
 page {
   background: #f6f6f6;

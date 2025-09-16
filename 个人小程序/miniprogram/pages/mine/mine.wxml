@@ -1,20 +1,21 @@
 <!-- “我的”板块：优化布局和交互 -->
-<view class="mine-container">
+<view class="mine-container" style="--theme-color: {{themeColor || '#07c160'}};">
   <!-- 顶部用户信息卡片（带阴影，突出头部） -->
   <view class="user-card">
     <view class="user-header">
-      <!-- 头像（默认图+加载过渡） -->
+      <!-- 头像 -->
       <image 
         class="mine-avatar" 
-        src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" 
-        mode="widthFix"
-        lazy-load
+        src="{{userInfo && userInfo.avatarUrl ? userInfo.avatarUrl : 'cloud://cloud1-1grapwhzb010af67.636c-cloud1-1grapwhzb010af67-1375656784/images/usercenter.png'}}" 
+        mode="aspectFill"
       />
-      <!-- 用户名+状态 -->
+      <!-- 用户名+性别 -->
       <view class="user-info-wrap">
-        <view class="mine-name">{{userInfo.nickName || "未登录"}}</view>
+        <view class="mine-name">
+          {{userInfo && userInfo.nickName ? userInfo.nickName : "未登录"}}
+        </view>
         <view class="user-status" wx:if="{{userInfo}}">
-          登录时间：{{formatLastLogin()}}
+          性别：{{userInfo.gender == 1 ? '男' : (userInfo.gender == 2 ? '女' : '未知')}}
         </view>
       </view>
       <!-- 登录/编辑按钮（根据登录状态切换） -->
@@ -40,35 +41,92 @@
   <!-- 数据统计卡片（如日记数量、收藏数，可选展示） -->
   <view class="stats-card" wx:if="{{userInfo}}">
     <view class="stat-item" bindtap="gotoDiaryList">
-      <view class="stat-value">{{diaryCount || 0}}</view>
+      <view class="stat-value">{{diaryCount}}</view>
       <view class="stat-label">我的日记</view>
     </view>
     <view class="stat-item" bindtap="gotoCollection">
-      <view class="stat-value">{{collectCount || 0}}</view>
+      <view class="stat-value">{{collectCount}}</view>
       <view class="stat-label">我的歌曲</view>
     </view>
-    <view class="stat-item" bindtap="gotoHistory">
-      <view class="stat-value">{{historyCount || 0}}</view>
-      <view class="stat-label">浏览历史</view>
+    <view class="stat-item">
+      <view class="stat-value">{{recordCount}}</view>
+      <view class="stat-label">录音数</view>
     </view>
   </view>
 
   <!-- 功能菜单列表（带分割线和点击效果） -->
   <view class="menu-card">
     <view class="menu-item" bindtap="gotoSetting" hover-class="menu-item--active">
-      <icon type="setting" size="32" color="#07c160" class="menu-icon" />
+      <icon type="setting" size="32" color="{{themeColor}}" class="menu-icon" />
       <text class="menu-text">设置</text>
       <icon type="right" size="24" color="#999" class="menu-arrow" />
     </view>
     <view class="menu-item" bindtap="gotoHelp" hover-class="menu-item--active">
-      <icon type="help" size="32" color="#07c160" class="menu-icon" />
+      <icon type="help" size="32" color="{{themeColor}}" class="menu-icon" />
       <text class="menu-text">帮助中心</text>
       <icon type="right" size="24" color="#999" class="menu-arrow" />
     </view>
     <view class="menu-item" bindtap="logout" hover-class="menu-item--active">
-      <icon type="logout" size="32" color="#F44336" class="menu-icon" />
+      <icon type="logout" size="32" color="{{themeColor}}" class="menu-icon" />
       <text class="menu-text">退出登录</text>
       <icon type="right" size="24" color="#999" class="menu-arrow" />
     </view>
   </view>
+
+  <!-- 设置弹窗 -->
+  <view class="popup-mask" wx:if="{{showSetting}}">
+    <view class="popup-container">
+      <view class="popup-title">设置</view>
+      <scroll-view class="popup-content" scroll-y>
+        
+        <!-- 主题颜色设置 -->
+        <view class="setting-item">
+          <view class="setting-label">主题颜色</view>
+          <view class="color-picker">
+            <view 
+              wx:for="{{themeColors}}" 
+              wx:key="index" 
+              class="color-option {{currentThemeIndex == index ? 'selected' : ''}}"
+              style="background-color: {{item.color}}" 
+              data-index="{{index}}"
+              bindtap="themeColorChange"
+            >
+              <view wx:if="{{currentThemeIndex == index}}" class="color-check">✓</view>
+            </view>
+          </view>
+        </view>
+        
+        <!-- 其他设置说明 -->
+        <view class="setting-item">
+          <view class="setting-label">其他功能</view>
+          <view class="popup-text">
+            后续会支持：
+            \n1. 数据备份/同步
+            \n2. 更多个性化功能...
+          </view>
+        </view>
+      </scroll-view>
+      <button class="popup-btn" bindtap="closePopup">关闭</button>
+    </view>
+  </view>
+
+  <!-- 帮助中心弹窗 -->
+  <view class="popup-mask" wx:if="{{showHelp}}">
+    <view class="popup-container">
+      <view class="popup-title">帮助中心</view>
+      <scroll-view class="popup-content" scroll-y>
+        <view class="popup-text">
+          常见问题：
+          \n1. 如何保存日记？
+          \n   → 点击日历选择日期后输入内容并保存。
+          \n2. 我的歌曲如何管理？
+          \n   → 可以在“我的歌曲”页面新建文件夹，录音会自动归类。
+          \n3. 登录信息丢失怎么办？
+          \n   → 重新点击“登录”按钮即可恢复。
+        </view>
+      </scroll-view>
+      <button class="popup-btn" bindtap="closePopup">关闭</button>
+    </view>
+  </view>
+
 </view>

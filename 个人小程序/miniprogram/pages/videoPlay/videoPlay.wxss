@@ -1,0 +1,62 @@
+/* pages/videoPlay/videoPlay.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.loading-tip {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.web-view-player,
+.native-player {
+  width: 100%;
+  height: 400rpx;
+}
+
+.video-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.video-platform {
+  font-size: 12px;
+  color: #999;
+}
+
+.video-info .title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.video-info .platform {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.action-buttons {
+  display: flex;
+  padding: 20rpx;
+}
+
+.action-buttons button {
+  flex: 1;
+  margin: 0 10rpx;
+}
+
+.copy-btn {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.share-btn {
+  background: #1aad19;
+  color: white;
+}

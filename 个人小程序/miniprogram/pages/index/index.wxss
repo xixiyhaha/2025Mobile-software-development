@@ -1,166 +1,245 @@
 /* 页面容器 */
 .container {
-    padding: 16px;
-    background-color: #f5f5f5;
-    min-height: 100vh;
-  }
+  padding: 16px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 120rpx; /* 给底部按钮留出空间 */
+}
+
+/* 头部标题 */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+.ddd-btn {
+  display: none; /* 如果没用就隐藏 */
+}
+
+/* 文件夹容器 */
+.folder-container {
+  width: 100%;
+}
+
+/* 空状态提示 */
+.empty-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 0;
+  color: #999;
+}
+.empty-tip text {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+/* 文件夹列表 */
+.folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.folder-item {
+  height:100rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.folder-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.folder-icon {
+  margin-right: 16px;
+}
+.folder-detail {
+  display: flex;
+  flex-direction: column;
+}
+.folder-name {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+.folder-desc {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 文件夹操作按钮容器 */
+.folder-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* 重命名按钮 */
+.rename-btn {
+  color: var(--theme-color);
+  font-size: 12px;
+  padding: 4px 12px;
+  background-color: white;
+  border: 1px solid var(--theme-color);
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+/* 重命名按钮悬停效果 */
+.rename-btn:hover {
+  background-color: var(--theme-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 重命名按钮点击效果 */
+.rename-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 删除按钮 */
+.delete-btn {
+  color: #ff4d4f;
+  font-size: 12px;
+  padding: 4px 12px;
+  background-color: white;
+  border: 1px solid #ff4d4f;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+/* 删除按钮悬停效果 */
+.delete-btn:hover {
+  background-color: #ff4d4f;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 删除按钮点击效果 */
+.delete-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* 对话框遮罩 */
+.dialog-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+/* 对话框容器 */
+.dialog-container {
+  background-color: white;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 8px;
+  padding: 20px;
+}
+.dialog-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.dialog-input {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.dialog-buttons {
+  display: flex;
+  justify-content: space-around;
+}/* 对话框按钮 */
+.dialog-btn {
+  width: 40%;
+  padding: 10px 0;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.cancel {
+  background-color: #f5f5f5;
+  color: #333;
+  border: none;
+}
+.cancel:hover {
+  background-color: #e8e8e8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.cancel:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.confirm {
+  background-color: var(--theme-color);
+  color: white;
+  border: none;
+}
+.confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.confirm:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
   
-  /* 头部标题和按钮 */
-  .header {
-    width:100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .title {
-    font-size: 28px;
-    font-weight: bold;
-    align-items: center;
-    color: #333;
-  }
-  .add-btn {
-    
-    background-color: #258655;
-    color: white;
-    padding: 0px 15px;
-    border-radius: 25px;
-    font-size: 17px;
-  }
-  .ddd-btn {
-    width:90rpx;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-  }
-  
-  /* 文件夹容器 */
-  .folder-container {
-    width: 100%;
-  }
-  
-  /* 空状态提示 */
-  .empty-tip {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px 0;
-    color: #999;
-  }
-  
-  .empty-tip text {
-    margin-top: 16px;
-    font-size: 14px;
-  }
-  
-  /* 文件夹列表 */
-  .folder-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  /* 文件夹项 */
-  .folder-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    border-radius: 8px;
-    padding: 12px 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  
-  .folder-info {
-    display: flex;
-    align-items: center;
-    flex: 1;
-  }
-  
-  .folder-icon {
-    margin-right: 16px;
-  }
-  
-  .folder-detail {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .folder-name {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 4px;
-  }
-  
-  .folder-desc {
-    font-size: 12px;
-    color: #999;
-  }
-  
-  /* 删除按钮 */
-  .delete-btn {
-    color: #ff4d4f;
-    font-size: 14px;
-    padding: 6px 12px;
-  }
-  
-  /* 对话框遮罩 */
-  .dialog-mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-  }
-  
-  /* 对话框容器 */
-  .dialog-container {
-    background-color: white;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 8px;
-    padding: 20px;
-  }
-  
-  .dialog-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-  
-  .dialog-input {
-    width: 95%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 20px;
-  }
-  
-  .dialog-buttons {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .dialog-btn {
-    width: 40%;
-    padding: 8px 0;
-    border-radius: 4px;
-  }
-  
-  .cancel {
-    background-color: #f5f5f5;
-    color: #333;
-  }
-  
-  .confirm {
-    background-color: #07c160;
-    color: white;
-  }
-      
+  /* 底部添加按钮 */
+.add-folder-btn {
+  position: fixed;
+  bottom: 20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: var(--theme-color);
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0,0,0,0.2);
+  z-index: 999;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+}
+.add-folder-btn:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 8rpx 20rpx rgba(0,0,0,0.25);
+}
+.add-folder-btn:active {
+  transform: translateX(-50%) translateY(0);
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.15);
+}

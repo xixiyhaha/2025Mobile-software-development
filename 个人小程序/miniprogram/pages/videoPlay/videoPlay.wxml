@@ -1,0 +1,31 @@
+<view class="container">
+  <!-- 错误提示 -->
+  <view wx:if="{{error}}" class="error-box">
+    <text>{{errorMsg}}</text>
+    <button bindtap="retryLoad">重试</button>
+    <button bindtap="copyVideoUrl">复制链接</button>
+  </view>
+
+  <!-- 加载提示 -->
+  <view wx:elif="{{isLoading}}" class="loading-box">
+    <text>正在加载...</text>
+  </view>
+
+  <!-- WebView 播放（B站 / 抖音 / 腾讯等） -->
+  <web-view 
+    wx:if="{{useWebView && !error}}" 
+    src="{{videoUrl}}" 
+    bindload="onWebViewLoad" 
+    binderror="onWebViewError"
+  />
+
+  <!-- 原生 video 播放（mp4/m3u8 等直链） -->
+  <video 
+    wx:elif="{{!useWebView && !error}}" 
+    src="{{videoUrl}}" 
+    autoplay 
+    controls 
+    show-progress 
+    binderror="onVideoError"
+  />
+</view>

@@ -14,7 +14,8 @@ Page({
     currentDiaryContent: "",
     diaries: {},
     isLoading: false, // 控制加载提示
-    openid: "" // 缓存当前用户openid
+    openid: "", // 缓存当前用户openid
+    themeColor: '#07c160' // 默认主题颜色
   },
 
   onLoad() {
@@ -35,10 +36,63 @@ Page({
     this.checkLoginStatus().then(isLoggedIn => {
       if (isLoggedIn) {
         this.generateCalendar();
+        // 同步主题颜色
+        this.syncThemeColor();
       } else {
         wx.navigateTo({ url: "/pages/login/login" });
       }
     });
+  },
+
+  /**
+   * 同步主题颜色到页面元素
+   */
+  syncThemeColor() {
+    try {
+      // 获取全局应用实例
+      const app = getApp();
+      // 获取主题颜色（优先从全局数据，其次从本地存储）
+      const themeColor = app.globalData.themeColor || wx.getStorageSync('themeColor') || '#07c160';
+      
+      // 设置导航栏颜色
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: themeColor,
+        animation: {
+          duration: 300
+        }
+      });
+      
+      // 更新页面主题色数据
+      this.setData({
+        themeColor: themeColor
+      });
+      
+      // 监听主题色变化事件
+      this.unregisterThemeListener();
+      this.themeListener = (data) => {
+        const newThemeColor = data.color || app.globalData.themeColor || wx.getStorageSync('themeColor') || '#07c160';
+        this.setData({
+          themeColor: newThemeColor
+        });
+      };
+      
+      // 注册事件监听
+      app.on('themeColorChanged', this.themeListener);
+    } catch (error) {
+      console.error('同步主题颜色失败:', error);
+    }
+  },
+
+  /**
+   * 取消注册主题色变化监听器
+   */
+  unregisterThemeListener() {
+    if (this.themeListener) {
+      const app = getApp();
+      app.off('themeColorChanged', this.themeListener);
+      this.themeListener = null;
+    }
   },
 
   /**
@@ -380,5 +434,12 @@ Page({
     this.setData({ currentYear, currentMonth }, () => {
       this.generateCalendar();
     });
+  },
+
+  /**
+   * 页面卸载时取消监听器
+   */
+  onUnload() {
+    this.unregisterThemeListener();
   }
 });

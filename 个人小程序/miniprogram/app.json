@@ -1,11 +1,14 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/aiChat/aiChat",
     "pages/calendar/calendar",
     "pages/mine/mine",
     "pages/login/login",
     "pages/practice/practice",
-    "pages/folder/detail"
+    "pages/folder/detail",
+    "pages/videoPlay/videoPlay",
+    "pages/edit/edit"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -15,7 +18,7 @@
   },
   "tabBar": {
     "color": "#999",
-    "selectedColor": "#333",
+    "selectedColor": "#07c160",
     "backgroundColor": "#fff",
     "borderStyle": "black",
     "list": [
@@ -24,6 +27,12 @@
         "text": "点歌台",
         "iconPath": "images/tab/song-default.png",
         "selectedIconPath": "images/tab/song-selected.png"
+      },
+      {
+        "pagePath": "pages/aiChat/aiChat",
+        "text": "AI交流",
+        "iconPath": "images/tab/ai-default.png",
+        "selectedIconPath": "images/tab/ai-selected.png"
       },
       {
         "pagePath": "pages/calendar/calendar",

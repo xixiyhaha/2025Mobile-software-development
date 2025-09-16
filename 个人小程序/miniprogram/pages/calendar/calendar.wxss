@@ -63,8 +63,6 @@
 }
 /* 今天样式 */
 .today {
-  background: #e6f7ff;
-  color: #1890ff;
   font-weight: bold;
 }
 /* 选中日期样式 */
@@ -83,7 +81,6 @@
   width: 12rpx;
   height: 12rpx;
   border-radius: 50%;
-  background: #ff4d4f;
   z-index: 2;
 }
 
@@ -113,7 +110,6 @@
 .save-diary-btn {
   width: 100%;
   padding: 20rpx 0;
-  background: #1890ff;
   color: #fff;
   border: none;
   border-radius: 8rpx;
@@ -148,7 +144,6 @@
   width: 40rpx;
   height: 40rpx;
   border: 4rpx solid #f3f3f3;
-  border-top: 4rpx solid #1890ff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 20rpx;
